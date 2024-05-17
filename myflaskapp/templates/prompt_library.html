@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prompt Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Prompt Library</h1>
+    <form id="create-prompt-form">
+        <input type="hidden" name="user_id" value="user123">
+        <div>
+            <label for="input_text">Input Text:</label>
+            <textarea id="input_text" name="input_text" rows="4"></textarea>
+        </div>
+        <div>
+            <label for="response_text">Response Text:</label>
+            <textarea id="response_text" name="response_text" rows="4"></textarea>
+        </div>
+        <button type="submit">Create Prompt</button>
+    </form>
+
+    <form id="test-prompt-form">
+        <input type="hidden" name="user_id" value="user123">
+        <div>
+            <label for="test_input_text">Test Input Text:</label>
+            <textarea id="test_input_text" name="test_input_text" rows="4"></textarea>
+        </div>
+        <button type="submit">Test Prompt</button>
+    </form>
+
+    <h2>Response:</h2>
+    <div id="test_response"></div>
+
+    <script>
+        document.getElementById('create-prompt-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/create_prompt', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => alert(data.message));
+        });
+
+        document.getElementById('test-prompt-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/test_prompt', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                  document.getElementById('test_response').textContent = data.response;
+              });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot Development Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Welcome to Chatbot Development Platform</h1>
+    <nav>
+        <a href="{{ url_for('prompt_library') }}">Prompt Library</a>
+        <a href="{{ url_for('model_tuning') }}">Model Tuning</a>
+    </nav>
+</body>
+</html>

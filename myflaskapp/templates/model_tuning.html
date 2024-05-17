@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Tuning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Model Tuning</h1>
+    <form id="tune-model-form">
+        <input type="hidden" name="user_id" value="user123">
+        <div>
+            <label for="temperature">Temperature:</label>
+            <input type="range" id="temperature" name="temperature" min="0.1" max="2.0" step="0.1" value="1.0">
+            <span id="temperature-value">1.0</span>
+        </div>
+        <div>
+            <label for="top_p">Top-p:</label>
+            <input type="range" id="top_p" name="top_p" min="0.0" max="1.0" step="0.1" value="0.9">
+            <span id="top_p-value">0.9</span>
+        </div>
+        <div>
+            <label for="top_k">Top-k:</label>
+            <input type="range" id="top_k" name="top_k" min="1" max="100" step="1" value="50">
+            <span id="top_k-value">50</span>
+        </div>
+        <button type="submit">Save Tuning Parameters</button>
+    </form>
+
+    <script>
+        document.getElementById('temperature').addEventListener('input', function () {
+            document.getElementById('temperature-value').textContent = this.value;
+        });
+
+        document.getElementById('top_p').addEventListener('input', function () {
+            document.getElementById('top_p-value').textContent = this.value;
+        });
+
+        document.getElementById('top_k').addEventListener('input', function () {
+            document.getElementById('top_k-value').textContent = this.value;
+        });
+
+        document.getElementById('tune-model-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/tune_model', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => alert(data.message));
+        });
+    </script>
+</body>
+</html>
